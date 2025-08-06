@@ -12,6 +12,7 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 * GitHub Actions Workflows zur automatischen Validierung und Demo-Nutzung
 * Funktioniert komplett **On-Premise** (kein Intune oder Azure notwendig), aber erweiterbar für Cloud-Szenarien
 * **Keine Abhängigkeit von Chocolatey** – entspricht einer normalen lokalen Installation von Visual Studio Code
+* **Failback-Strategie** in den Workflows: prüft zuerst User-Installation, dann System-Installation, installiert bei Bedarf via Winget
 
 ---
 
@@ -22,6 +23,7 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 * `dist/` → Build-Artefakte (z. B. VSIX)
 * `README.md` → Dokumentation
 * `LICENSE.md` → Lizenzinformationen
+* `CHANGELOG.md` → Protokollierung aller Änderungen
 
 ---
 
@@ -71,20 +73,28 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 
   * Testet `Install-Extensions.ps1` **und** `Update-Extensions.ps1` in frischer Windows-Umgebung
   * Prüft die `extensions.txt` auf Gültigkeit
-  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
+  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
   * Trigger: Automatisch bei Änderungen in `scripts/*.ps1` oder `scripts/extensions.txt`, manuell über GitHub UI
 
 * **install-only.yml**
 
   * Führt nur `Install-Extensions.ps1` aus – ideal als **Schulungs-Demo**
-  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
+  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
   * Trigger: Manuell über GitHub UI (`workflow_dispatch`)
 
 * **build-extension.yml**
 
   * Simuliert den Build-Prozess für Extensions (z. B. `.vsix`)
-  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
+  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
   * Trigger: Automatisch bei Push auf `main` oder manuell über GitHub UI
+
+---
+
+## 📌 Letzte Änderungen
+
+* Chocolatey entfernt – Workflows setzen jetzt direkt auf vorhandene VS Code Installationen
+* Failback-Strategie implementiert: User → System → Winget
+  👉 Details siehe [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
