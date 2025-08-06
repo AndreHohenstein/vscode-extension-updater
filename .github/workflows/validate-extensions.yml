@@ -19,28 +19,36 @@ jobs:
       - name: ⚙️ Stelle VS Code CLI bereit
         shell: pwsh
         run: |
-          $possiblePaths = @(
-            "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd", # User-Installation (bevorzugt)
-            "C:\Program Files\Microsoft VS Code\bin\code.cmd"                             # System-Installation (Fallback)
+          $paths = @(
+            "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd",
+            "C:\Program Files\Microsoft VS Code\bin\code.cmd"
           )
 
-          $found = $false
-          foreach ($p in $possiblePaths) {
+          $cliPath = $null
+          foreach ($p in $paths) {
             if (Test-Path $p) {
-              Write-Host "✅ VS Code CLI gefunden: $p"
-              echo (Split-Path $p) | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-              $found = $true
+              $cliPath = $p
               break
             }
           }
 
-          if (-not $found) {
-            Write-Host "⚠️ VS Code CLI nicht gefunden, installiere mit winget..."
-            winget install -e --id Microsoft.VisualStudioCode -h
-            echo "C:\Program Files\Microsoft VS Code\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          if (-not $cliPath) {
+            if ($env:GITHUB_ACTIONS -eq "true") {
+              Write-Host "⚠️ VS Code CLI nicht gefunden – lade offiziellen Installer..."
+              Invoke-WebRequest -Uri "https://update.code.visualstudio.com/latest/win32-x64-user/stable" -OutFile vscode_installer.exe
+              Start-Process -FilePath .\vscode_installer.exe -ArgumentList "/VERYSILENT /MERGETASKS=!runcode" -Wait
+              $cliPath = "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+            }
+            else {
+              Write-Host "⚠️ VS Code CLI nicht gefunden – versuche Winget..."
+              winget install -e --id Microsoft.VisualStudioCode -h
+              $cliPath = "C:\Program Files\Microsoft VS Code\bin\code.cmd"
+            }
           }
 
-          code --version
+          Write-Host "✅ Verwende VS Code CLI: $cliPath"
+          echo (Split-Path $cliPath) | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          & $cliPath --version
 
       - name: 📄 Zeige Extension-Liste
         shell: pwsh
