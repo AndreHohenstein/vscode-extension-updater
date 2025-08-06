@@ -6,17 +6,17 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 ---
 
 ## 🚀 Features
-- Automatischer Build und Release von VSIX-Paketen über **GitHub Actions**  
-- PowerShell-Skripte zum **lokalen Installieren und Aktualisieren** von Extensions  
-- Funktioniert komplett **On-Premise** (kein Intune oder Azure notwendig)  
+- Automatischer Build und Release von VSIX-Paketen über **GitHub Actions**
+- PowerShell-Skripte zum **lokalen Installieren und Aktualisieren** von Extensions
+- Funktioniert komplett **On-Premise** (kein Intune oder Azure notwendig)
 
 ---
 
 ## 📂 Projektstruktur
-.github/workflows/   → GitHub Actions Workflow  
-scripts/             → PowerShell-Skripte  
-dist/                → Build-Artefakte (z. B. VSIX)  
-README.md            → Dokumentation  
+.github/workflows/   → GitHub Actions Workflow
+scripts/             → PowerShell-Skripte
+dist/                → Build-Artefakte (z. B. VSIX)
+README.md            → Dokumentation
 
 ---
 
@@ -38,23 +38,21 @@ README.md            → Dokumentation
 
 ### Übersicht
 
-| Skript-Datei                  | Zweck                                                                 | Verhalten                                                                 |
-|--------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------|
-| **Install-Extensions.ps1**     | Installiert alle Extensions aus der `extensions.txt`.                 | - Führt `code --install-extension` für jede Extension aus<br>- Erzwingt Installation oder Update, auch wenn schon vorhanden<br>- Meldung: „already installed“ bei aktueller Version |
-| **Update-Extensions.ps1**      | Prüft, ob Updates verfügbar sind, und installiert nur bei Bedarf.     | - Führt `code --install-extension --dry-run` zur Prüfung aus<br>- Wenn aktuell → keine Aktion<br>- Wenn veraltet → installiert die neue Version<br>- Meldung: „✅ aktuell“ oder „⬇️ Update verfügbar“ |
+| Skript-Datei               | Zweck                                                             | Verhalten                                                                                                                                                                                           |
+| -------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Install-Extensions.ps1** | Installiert alle Extensions aus der `extensions.txt`.             | - Führt `code --install-extension` für jede Extension aus<br>- Erzwingt Installation oder Update, auch wenn schon vorhanden<br>- Meldung: „already installed“ bei aktueller Version                 |
+| **Update-Extensions.ps1**  | Prüft, ob Updates verfügbar sind, und installiert nur bei Bedarf. | - Führt `code --install-extension --dry-run` zur Prüfung aus<br>- Wenn aktuell → keine Aktion<br>- Wenn veraltet → installiert die neue Version<br>- Meldung: „✅ aktuell“ oder „⬇️ Update verfügbar“ |
 
 ---
 
 ## 🤝 Mitmachen
-Beiträge und Vorschläge sind willkommen!  
-- Fork erstellen  
-- Änderungen machen  
-- Pull Request schicken  
+Beiträge und Vorschläge sind willkommen!
+- Fork erstellen
+- Änderungen machen
+- Pull Request schicken
 
 ---
 
 ## 📜 Lizenz
-Dieses Projekt steht unter der **MIT License**. Frei nutzbar, auch für eigene Projekte.
-```
-
----
+Dieses Projekt steht unter der **MIT License**.
+Siehe [LICENSE.md](./LICENSE.md) für Details.
