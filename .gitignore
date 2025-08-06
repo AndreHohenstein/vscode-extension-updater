@@ -1,0 +1,14 @@
+# Build-Artefakte
+dist/
+*.vsix
+
+# Logs
+*.log
+
+# Systemdateien
+Thumbs.db
+.DS_Store
+
+# VSCode-Settings
+.vscode/
+.idea/
