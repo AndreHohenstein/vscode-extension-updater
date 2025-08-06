@@ -1,0 +1,47 @@
+name: Validate VS Code Extensions
+
+on:
+  push:
+    paths:
+      - "scripts/extensions.txt"
+      - "scripts/*.ps1"
+  workflow_dispatch:   # manuelles Starten möglich
+
+jobs:
+  validate:
+    name: "🔍 Teste PowerShell-Skripte (Install & Update)"
+    runs-on: windows-latest   # wir brauchen Windows für PowerShell + VS Code CLI
+
+    steps:
+      - name: 📥 Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Installiere VS Code
+        run: |
+          choco install vscode -y
+          code --version
+
+      - name: ⚙️ PowerShell Core installieren (falls nicht vorhanden)
+        run: |
+          choco install pwsh -y
+          pwsh --version
+
+      - name: 📄 Zeige Extension-Liste
+        shell: pwsh
+        run: Get-Content ./scripts/extensions.txt
+
+      - name: ▶️ Teste Install-Skript
+        shell: pwsh
+        run: |
+          ./scripts/Install-Extensions.ps1 -LogFile "$env:TEMP\InstallTest.log"
+
+      - name: ▶️ Teste Update-Skript
+        shell: pwsh
+        run: |
+          ./scripts/Update-Extensions.ps1 -LogFile "$env:TEMP\UpdateTest.log"
+
+      - name: 📦 Lade Logs als Artefakte hoch
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-extensions-logs
+          path: ${{ runner.temp }}
