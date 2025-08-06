@@ -10,21 +10,16 @@ on:
 jobs:
   validate:
     name: "🔍 Teste PowerShell-Skripte (Install & Update)"
-    runs-on: windows-latest   # wir brauchen Windows für PowerShell + VS Code CLI
+    runs-on: windows-latest
 
     steps:
       - name: 📥 Repository auschecken
         uses: actions/checkout@v4
 
-      - name: ⚙️ Installiere VS Code
+      - name: ⚙️ Stelle VS Code CLI bereit
         run: |
-          choco install vscode -y
+          echo "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           code --version
-
-      - name: ⚙️ PowerShell Core installieren (falls nicht vorhanden)
-        run: |
-          choco install pwsh -y
-          pwsh --version
 
       - name: 📄 Zeige Extension-Liste
         shell: pwsh

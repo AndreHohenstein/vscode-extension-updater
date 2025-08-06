@@ -12,9 +12,9 @@ jobs:
       - name: 📥 Repository auschecken
         uses: actions/checkout@v4
 
-      - name: ⚙️ Installiere VS Code
+      - name: ⚙️ Stelle VS Code CLI bereit
         run: |
-          choco install vscode -y
+          echo "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           code --version
 
       - name: ▶️ Führe Install-Skript aus

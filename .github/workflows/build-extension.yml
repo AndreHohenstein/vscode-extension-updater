@@ -1,38 +1,47 @@
-name: Build & Release VS Code Extension
+name: Build VS Code Extensions
 
 on:
   push:
-    tags:
-      - 'v*'       # startet bei Tags wie v1.0.0
-  workflow_dispatch:   # erlaubt manuelles Starten im GitHub UI
+    branches:
+      - main
+    paths:
+      - "scripts/extensions.txt"
+      - "scripts/*.ps1"
+  workflow_dispatch:   # manuelles Starten möglich
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: "⚒️ Build Extensions (Demo/Simulation)"
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 📥 Repository auschecken
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: ⚙️ Stelle VS Code CLI bereit
+        run: |
+          echo "C:\Users\runneradmin\AppData\Local\Programs\Microsoft VS Code\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          code --version
 
-      - name: Install VSCE (VS Code Extension Manager)
-        run: npm install -g vsce
+      - name: 📄 Zeige Extension-Liste
+        shell: pwsh
+        run: Get-Content ./scripts/extensions.txt
 
-      - name: Package Extension
-        run: vsce package
+      - name: ▶️ Simuliere Build-Prozess
+        shell: pwsh
+        run: |
+          Write-Host "🚀 Starte Build der Extensions..."
+          $extensions = Get-Content ./scripts/extensions.txt
+          foreach ($ext in $extensions) {
+              if (-not [string]::IsNullOrWhiteSpace($ext)) {
+                  Write-Host "⚒️ Baue Extension: $ext"
+                  # Simulation: hier könnte man mit vsce oder anderen Tools ein echtes .vsix bauen
+              }
+          }
+          Write-Host "✅ Build-Prozess abgeschlossen."
 
-      - name: Upload Artifact
+      - name: 📦 Artefakte speichern (Build-Simulation)
         uses: actions/upload-artifact@v4
         with:
-          name: vscode-extension
-          path: "*.vsix"
-
-      - name: Attach VSIX to Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: "*.vsix"
+          name: build-extensions-log
+          path: ./scripts/extensions.txt

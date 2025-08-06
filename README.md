@@ -11,6 +11,7 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 * CMTrace-kompatibles Logging für bessere Nachvollziehbarkeit
 * GitHub Actions Workflows zur automatischen Validierung und Demo-Nutzung
 * Funktioniert komplett **On-Premise** (kein Intune oder Azure notwendig), aber erweiterbar für Cloud-Szenarien
+* **Keine Abhängigkeit von Chocolatey** – entspricht einer normalen lokalen Installation von Visual Studio Code
 
 ---
 
@@ -70,12 +71,20 @@ Dieses Projekt automatisiert den **Download und die Installation von Visual Stud
 
   * Testet `Install-Extensions.ps1` **und** `Update-Extensions.ps1` in frischer Windows-Umgebung
   * Prüft die `extensions.txt` auf Gültigkeit
+  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
   * Trigger: Automatisch bei Änderungen in `scripts/*.ps1` oder `scripts/extensions.txt`, manuell über GitHub UI
 
 * **install-only.yml**
 
   * Führt nur `Install-Extensions.ps1` aus – ideal als **Schulungs-Demo**
+  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
   * Trigger: Manuell über GitHub UI (`workflow_dispatch`)
+
+* **build-extension.yml**
+
+  * Simuliert den Build-Prozess für Extensions (z. B. `.vsix`)
+  * Nutzt vorhandene VS Code Installation (kein Chocolatey)
+  * Trigger: Automatisch bei Push auf `main` oder manuell über GitHub UI
 
 ---
 
