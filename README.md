@@ -1,114 +1,146 @@
-# 📦 VSCode Extension Updater
+# 🚀 VSCode Extension Updater
 
-Dieses Projekt automatisiert den **Download und die Installation von Visual Studio Code Extensions** mithilfe von **GitHub Actions** und **PowerShell**.
-
----
-
-## 🚀 Features
-
-* Automatischer Build und Release von VSIX-Paketen über **GitHub Actions**
-* PowerShell-Skripte zum **lokalen Installieren und Aktualisieren** von Extensions
-* CMTrace-kompatibles Logging für bessere Nachvollziehbarkeit
-* GitHub Actions Workflows zur automatischen Validierung und Demo-Nutzung
-* Funktioniert komplett **On-Premise** (kein Intune oder Azure notwendig), aber erweiterbar für Cloud-Szenarien
-* **Keine Abhängigkeit von Chocolatey** – entspricht einer normalen lokalen Installation von Visual Studio Code
-* **Failback-Strategie** in den Workflows: prüft zuerst User-Installation, dann System-Installation, installiert bei Bedarf via Winget
+Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual Studio Code-Erweiterungen – inklusive GitHub Actions-Workflows, Logging, Failback-Strategien und Schulungsbeispielen.
 
 ---
 
-## 📂 Projektstruktur
+## 📝 Inhaltsverzeichnis
 
-* `.github/workflows/` → GitHub Actions Workflows
-* `scripts/` → PowerShell-Skripte + Extension-Liste
-* `dist/` → Build-Artefakte (z. B. VSIX)
-* `README.md` → Dokumentation
-* `LICENSE.md` → Lizenzinformationen
-* `CHANGELOG.md` → Protokollierung aller Änderungen
+* [🚀 Projektüberblick](#-projektüberblick)
+* [📸 Screenshots](#-screenshots)
+* [⚙️ Installation](#️-installation)
+* [🚀 Verwendung](#-verwendung)
+* [✨ Features & Highlights](#-features--highlights)
+* [🧰 Voraussetzungen](#-voraussetzungen)
+* [📁 Projektstruktur](#-projektstruktur)
+* [🔄 GitHub Workflows](#-github-workflows)
+* [📜 Lizenz](#-lizenz)
+* [🧾 Changelog](#-changelog)
+* [💬 Feedback & Support](#-feedback--support)
 
 ---
 
-## 🔧 Nutzung (lokal)
+## 🚀 Projektüberblick
+
+Dieses Projekt bietet zwei PowerShell-Skripte zur Verwaltung von VS Code Extensions:
+
+* `Install-Extensions.ps1` – für die initiale Installation definierter Erweiterungen
+* `Update-Extensions.ps1` – für die automatische Update-Prüfung & Installation
+
+Die GitHub Workflows ermöglichen es zusätzlich, diese Logik im CI/CD-Kontext auszuführen – z. B. für Schulungen, Demos, automatisierte Tests oder Entwicklungsszenarien.
+
+---
+
+## 📸 Screenshots
+
+> *(Optionaler Bereich – hier kannst du künftig Beispielausgaben einfügen)*
+
+---
+
+## ⚙️ Installation
+
+Die Installation erfolgt manuell durch das Klonen des Repositories und Ausführen der Skripte.
 
 ```powershell
-# Installation aller Extensions
-.\scripts\Install-Extensions.ps1
+# Repository klonen
+git clone https://github.com/AndreHohenstein/vscode-extension-updater.git
+cd vscode-extension-updater/scripts
 
-# Nur prüfen und bei Bedarf aktualisieren
-.\scripts\Update-Extensions.ps1
+# PowerShell-Skripte ausführen
+./Install-Extensions.ps1
+./Update-Extensions.ps1
 ```
 
-👉 Beide Skripte lesen die `extensions.txt` im `scripts/`-Ordner aus und arbeiten die Liste automatisch ab.
-👉 Alle Aktionen werden zusätzlich in ein Logfile geschrieben (`$env:TEMP\\VscodeExtensionsUpdater.log`), das **CMTrace-kompatibel** ist.
+---
+
+## 🚀 Verwendung
+
+```powershell
+# Extensions installieren (z. B. nach Clean-Setup oder auf Testsystem)
+./Install-Extensions.ps1 -LogPath "$env:TEMP\vscode-extensions-install.log"
+
+# Extensions aktualisieren
+./Update-Extensions.ps1 -LogPath "$env:TEMP\vscode-extensions-update.log"
+```
 
 ---
 
-## ⚙️ Skripte
+## ✨ Features & Highlights
 
-### Übersicht
-
-* **Install-Extensions.ps1** → Installiert alle Extensions aus der `extensions.txt`.
-* **Update-Extensions.ps1** → Prüft, ob Updates verfügbar sind und aktualisiert bei Bedarf.
-
-### 📜 Details zu Install-Extensions.ps1
-
-* Führt `code --install-extension` für jede Extension aus
-* Erzwingt Installation oder Update, auch wenn schon vorhanden
-* Meldung: „already installed“ bei aktueller Version
-* Schreibt Logeinträge (INFO / SUCCESS / ERROR) in Logfile
-
-### 📜 Details zu Update-Extensions.ps1
-
-* Führt `code --install-extension --dry-run` zur Prüfung aus
-* Meldung: „✅ aktuell“ oder „⬇️ Update verfügbar“
-* Installiert neue Version nur bei Bedarf
-* Schreibt Logeinträge (INFO / SUCCESS / ERROR) in Logfile
+| Symbol | Funktion                                   |
+| ------ | ------------------------------------------ |
+| 🔍     | Prüfen installierter Erweiterungen         |
+| ⚡      | Automatisches Update veralteter Add-ons    |
+| 🗒️    | CMTrace-kompatibles Logging                |
+| 🤖     | GitHub Actions Workflows                   |
+| 🧪     | Demo-Workflow für Schulungen               |
+| 🧰     | Failback-Strategie: User → System → Winget |
 
 ---
 
-## 🤖 GitHub Actions Workflows
+## 🧰 Voraussetzungen
 
-### Übersicht
+* Windows 10/11 mit PowerShell 5.1 oder höher
+* Visual Studio Code lokal installiert (User- oder System-Installer)
+* Git (für Repository-Zugriff)
 
-* **validate-extensions.yml**
+Optional:
 
-  * Testet `Install-Extensions.ps1` **und** `Update-Extensions.ps1` in frischer Windows-Umgebung
-  * Prüft die `extensions.txt` auf Gültigkeit
-  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
-  * Trigger: Automatisch bei Änderungen in `scripts/*.ps1` oder `scripts/extensions.txt`, manuell über GitHub UI
-
-* **install-only.yml**
-
-  * Führt nur `Install-Extensions.ps1` aus – ideal als **Schulungs-Demo**
-  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
-  * Trigger: Manuell über GitHub UI (`workflow_dispatch`)
-
-* **build-extension.yml**
-
-  * Simuliert den Build-Prozess für Extensions (z. B. `.vsix`)
-  * Nutzt vorhandene VS Code Installation (User → System → Winget Failback)
-  * Trigger: Automatisch bei Push auf `main` oder manuell über GitHub UI
+* Winget (für Failback-Funktion, falls VS Code nicht vorhanden ist)
 
 ---
 
-## 📌 Letzte Änderungen
+## 📁 Projektstruktur
 
-* Chocolatey entfernt – Workflows setzen jetzt direkt auf vorhandene VS Code Installationen
-* Failback-Strategie implementiert: User → System → Winget
-  👉 Details siehe [CHANGELOG.md](CHANGELOG.md)
+```
+📁 scripts
+ ├── 📜 Install-Extensions.ps1
+ └── 📜 Update-Extensions.ps1
+
+📁 .github/workflows
+ ├── 🧪 install-only.yml
+ ├── ⚙️ build-extensions.yml
+ └── ✅ validate-extensions.yml
+
+📜 README.md
+📜 LICENSE.md
+📜 CHANGELOG.md
+```
 
 ---
 
-## 🤝 Mitmachen
+## 🔄 GitHub Workflows
 
-Beiträge und Vorschläge sind willkommen!
+Die folgenden Workflows unterstützen automatisiertes Testen und Validieren:
 
-* Fork erstellen
-* Änderungen machen
-* Pull Request schicken
+| Workflow-Datei            | Beschreibung                             |
+| ------------------------- | ---------------------------------------- |
+| `validate-extensions.yml` | Prüft das Update-Skript im GitHub Runner |
+| `build-extensions.yml`    | Validiert Build-Szenarien & CLI-Pfade    |
+| `install-only.yml`        | Demo-Workflow für Trainingsumgebungen    |
 
 ---
 
 ## 📜 Lizenz
 
-Dieses Projekt steht unter der **MIT License**.
-👉 Siehe [LICENSE.md](LICENSE.md) für Details.
+Dieses Projekt steht unter der [MIT-Lizenz](LICENSE.md). Frei verwendbar – auch für eigene Projekte & Schulungsunterlagen.
+
+---
+
+## 🧾 Changelog
+
+Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
+
+---
+
+## 💬 Feedback & Support
+
+Für Fragen, Verbesserungsvorschläge oder Rückmeldungen:
+
+📧 E-Mail: [a.hohenstein@outlook.com](mailto:a.hohenstein@outlook.com)
+📢 GitHub Issues: [Projekt-Issuebereich öffnen](https://github.com/AndreHohenstein/vscode-extension-updater/issues)
+👨‍🏫 Einsatz für Schulungen & Community willkommen!
+
+---
+
+© 2025 André Hohenstein – Microsoft Certified Trainer 💻
