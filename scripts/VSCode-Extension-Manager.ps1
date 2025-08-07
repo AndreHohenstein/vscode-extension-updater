@@ -1,12 +1,40 @@
-﻿# VSCode-Extension-Manager.ps1 – Interactive PowerShell Menu for VSCode Extension Updater
-function Show-File {
-    param($file)
-    $filePath = Join-Path $PSScriptRoot $file
-    if (Test-Path $filePath) {
-        notepad $filePath
-    } else {
-        Write-Host "File not found: $filePath" -ForegroundColor Yellow
+﻿# VSCode-Extension-Manager.ps1 – Interactive PowerShell Menu with Smart Logfile Viewer
+
+function Open-LogFile {
+    param($logPath)
+
+    if (-not (Test-Path $logPath)) {
+        Write-Host "No log file found at $logPath" -ForegroundColor Yellow
+        Pause
+        return
     }
+
+    # Try CMTrace (Microsoft Diagnostics Tool)
+    $cmtracePaths = @(
+        "$env:WINDIR\CCM\CMTrace.exe",
+        "$env:ProgramFiles\ConfigMgr 2012 Toolkit R2\ClientTools"
+    )
+    foreach ($cmtrace in $cmtracePaths) {
+        if (Test-Path $cmtrace) {
+            Start-Process $cmtrace -ArgumentList "`"$logPath`""
+            return
+        }
+    }
+
+    # Try Notepad++
+    $npp = "$env:ProgramFiles\Notepad++\notepad++.exe"
+    if (Test-Path $npp) {
+        Start-Process $npp -ArgumentList "`"$logPath`""
+        return
+    }
+    $npp86 = "$env:ProgramFiles(x86)\Notepad++\notepad++.exe"
+    if (Test-Path $npp86) {
+        Start-Process $npp86 -ArgumentList "`"$logPath`""
+        return
+    }
+
+    # Fallback: Classic Notepad
+    Start-Process "$env:WINDIR\notepad.exe" -ArgumentList "`"$logPath`""
 }
 
 function Show-About {
@@ -27,75 +55,70 @@ function Show-About {
 
 do {
     Clear-Host
-Write-Host ""
-Write-Host "🚀 VSCode Extension Manager" -ForegroundColor Magenta
-Write-Host "--------------------------------------`n"
+    Write-Host ""
+    Write-Host "🚀 VSCode Extension Manager" -ForegroundColor Magenta
+    Write-Host "--------------------------------------`n"
 
-Write-Host "1. 🚀  Install extensions (fresh setup)"
-Write-Host "2. ♻️  Update extensions (check for updates)"
-Write-Host "3. 📄  Show update log"
-Write-Host "4. 📂  Open project page on GitHub"
-Write-Host "5. 📘  Show README on GitHub"
-Write-Host "6. 📝  Show CHANGELOG on GitHub"
-Write-Host "7. 📜  Show LICENSE on GitHub"
-Write-Host "8. 💬  About & Feedback"
-Write-Host "9. ❌  Exit"
-Write-Host ""
+    Write-Host "1. 🚀  Install extensions (fresh setup)"
+    Write-Host "2. ♻️  Update extensions (check for updates)"
+    Write-Host "3. 📄  Show installation log"
+    Write-Host "4. 📄  Show update log"
+    Write-Host "5. 📂  Open project page on GitHub"
+    Write-Host "6. 📘  Show README on GitHub"
+    Write-Host "7. 📝  Show CHANGELOG on GitHub"
+    Write-Host "8. 📜  Show LICENSE on GitHub"
+    Write-Host "9. 💬  About & Feedback"
+    Write-Host "0. ❌  Exit"
+    Write-Host ""
 
-    $choice = Read-Host "Please select an option (1-9)"
+    $choice = Read-Host "Please select an option (0-9)"
     switch ($choice) {
-    1 {
-        # Install extensions
-        & "$PSScriptRoot\Install-Extensions.ps1"
-        Pause
-    }
-    2 {
-        # Update extensions
-        & "$PSScriptRoot\Update-Extensions.ps1"
-        Pause
-    }
-    3 {
-        # Show update log (optional: lokalen Pfad, hier als Beispiel)
-        $logPath = "$env:TEMP\VscodeExtensionsUpdater.log"
-        if (Test-Path $logPath) {
-            notepad $logPath
-        } else {
-            Write-Host "No log file found at $logPath" -ForegroundColor Yellow
+        1 {
+            & "$PSScriptRoot\Install-Extensions.ps1"
+            Pause
         }
-        Pause
+        2 {
+            & "$PSScriptRoot\Update-Extensions.ps1"
+            Pause
+        }
+        3 {
+            # Show installation log (uses smart log viewer)
+            $logPath = "$env:TEMP\vscode-extensions-install.log"
+            Open-LogFile $logPath
+            Pause
+        }
+        4 {
+            # Show update log (uses smart log viewer)
+            $logPath = "$env:TEMP\vscode-extensions-update.log"
+            Open-LogFile $logPath
+            Pause
+        }
+        5 {
+            Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater"
+            Pause
+        }
+        6 {
+            Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/README.md"
+            Pause
+        }
+        7 {
+            Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/CHANGELOG.md"
+            Pause
+        }
+        8 {
+            Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/LICENSE.md"
+            Pause
+        }
+        9 {
+            Show-About
+            Pause
+        }
+        0 {
+            exit
+        }
+        Default {
+            Write-Host "Invalid selection. Please try again." -ForegroundColor Red
+            Pause
+        }
     }
-    4 {
-        # Open project page on GitHub
-        Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater"
-        Pause
-    }
-    5 {
-        # Show README on GitHub
-        Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/README.md"
-        Pause
-    }
-    6 {
-        # Show CHANGELOG on GitHub
-        Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/CHANGELOG.md"
-        Pause
-    }
-    7 {
-        # Show LICENSE on GitHub
-        Start-Process "https://github.com/AndreHohenstein/vscode-extension-updater/blob/main/LICENSE.md"
-        Pause
-    }
-    8 {
-        # About & Feedback
-        Write-Host "Project by André Hohenstein (Microsoft Certified Trainer)" -ForegroundColor Cyan
-        Write-Host "Feedback: https://github.com/AndreHohenstein/vscode-extension-updater/issues"
-        Pause
-    }
-    9 {
-        exit
-    }
-    Default {
-        Write-Host "Invalid selection. Please try again." -ForegroundColor Red
-        Pause
-    }
- }
-} while ($choice -ne '9')
+} while ($choice -ne '0')

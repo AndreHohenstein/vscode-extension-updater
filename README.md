@@ -1,3 +1,4 @@
+
 # 🚀 VSCode Extension Updater
 
 ![Build](https://github.com/AndreHohenstein/vscode-extension-updater/actions/workflows/validate-extensions.yml/badge.svg)
@@ -15,11 +16,13 @@ Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual
 
 - [🚀 Projektüberblick](#-projektüberblick)
 - [📸 Screenshots](#-screenshots)
+- [🎬 Demo: Interaktives Menü](#-demo-interaktives-menü)
 - [⚙️ Installation](#️-installation)
 - [🚀 Verwendung](#-verwendung)
 - [✨ Features & Highlights](#-features--highlights)
 - [🧰 Voraussetzungen](#-voraussetzungen)
 - [📁 Projektstruktur](#-projektstruktur)
+- [🗂️ Enthaltene Extensions](#️-enthaltene-extensions)
 - [🔄 GitHub Workflows](#-github-workflows)
 - [📜 Lizenz](#-lizenz)
 - [🧾 Changelog](#-changelog)
@@ -31,8 +34,9 @@ Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual
 
 Dieses Projekt bietet zwei PowerShell-Skripte zur Verwaltung von VS Code Extensions:
 
-- `Install-Extensions.ps1` – für die initiale Installation definierter Erweiterungen
-- `Update-Extensions.ps1` – für die automatische Update-Prüfung & Installation
+- [`Install-Extensions.ps1`](./scripts/Install-Extensions.ps1) – für die initiale Installation definierter Erweiterungen
+- [`Update-Extensions.ps1`](./scripts/Update-Extensions.ps1) – für die automatische Update-Prüfung & Installation
+- **Interaktives Menü:** [`VSCode-Extension-Manager.ps1`](./scripts/VSCode-Extension-Manager.ps1) – ideal für Demo/Training, siehe unten!
 
 Die GitHub Workflows ermöglichen es zusätzlich, diese Logik im CI/CD-Kontext auszuführen – z. B. für Schulungen, Demos, automatisierte Tests oder Entwicklungsszenarien.
 
@@ -52,6 +56,15 @@ Die GitHub Workflows ermöglichen es zusätzlich, diese Logik im CI/CD-Kontext a
 
 ---
 
+## 🎬 Demo: Interaktives Menü
+
+Das Skript [`VSCode-Extension-Manager.ps1`](./scripts/VSCode-Extension-Manager.ps1) bietet ein komfortables, menügesteuertes Interface zur Installation, Aktualisierung und Protokollanzeige der Extensions.  
+**Ideal als Demo für Schulungszwecke oder Admin-Tool.**
+
+![VSCode-Extension-Manager GIF](./assets/VSCode-Extension-Manager.gif)
+
+---
+
 ## ⚙️ Installation
 
 Die Installation erfolgt manuell durch das Klonen des Repositories und Ausführen der Skripte.
@@ -64,6 +77,7 @@ cd vscode-extension-updater/scripts
 # PowerShell-Skripte ausführen
 ./Install-Extensions.ps1
 ./Update-Extensions.ps1
+./VSCode-Extension-Manager.ps1
 ```
 
 ---
@@ -76,6 +90,9 @@ cd vscode-extension-updater/scripts
 
 # Extensions aktualisieren
 ./Update-Extensions.ps1 -LogPath "$env:TEMP\\vscode-extensions-update.log"
+
+# Interaktives Menü (empfohlen für Demos)
+./VSCode-Extension-Manager.ps1
 ```
 
 ---
@@ -90,6 +107,7 @@ cd vscode-extension-updater/scripts
 | 🤖     | GitHub Actions Workflows                   |
 | 🧪     | Demo-Workflow für Schulungen               |
 | 🧰     | Failback-Strategie: User → System → Winget |
+| 🖥️     | Interaktives PowerShell-Menü              |
 
 ---
 
@@ -107,10 +125,12 @@ Optional:
 
 ## 📁 Projektstruktur
 
-```
+```plaintext
 📁 scripts
  ├── 📜 Install-Extensions.ps1
- └── 📜 Update-Extensions.ps1
+ ├── 📜 Update-Extensions.ps1
+ ├── 📜 VSCode-Extension-Manager.ps1
+ └── 📄 extensions.txt
 
 📁 .github/workflows
  ├── 🧪 install-only.yml
@@ -119,12 +139,32 @@ Optional:
 
 📁 assets
  ├── GitHubActions.png
- └── Update-Extensions.png
+ ├── Update-Extensions.png
+ └── VSCode-Extension-Manager.gif
 
 📜 README.md
 📜 LICENSE.md
 📜 CHANGELOG.md
 ```
+
+---
+
+## 🗂️ Enthaltene Extensions
+
+Die zu installierenden Erweiterungen werden in der Datei [`extensions.txt`](./scripts/extensions.txt) verwaltet.  
+**Beispiel-Auszug:**
+
+```text
+ms-ceintl.vscode-language-pack-de
+ms-vscode.powershell
+github.vscode-pull-request-github
+eamodio.gitlens
+akamud.vscode-theme-onedark
+PKief.material-icon-theme
+enkia.tokyo-night
+...
+```
+> *Die vollständige Liste kann flexibel angepasst werden!*
 
 ---
 
@@ -134,21 +174,21 @@ Die folgenden Workflows unterstützen automatisiertes Testen und Validieren:
 
 | Workflow-Datei            | Beschreibung                             |
 | ------------------------- | ---------------------------------------- |
-| `validate-extensions.yml` | Prüft das Update-Skript im GitHub Runner |
-| `build-extensions.yml`    | Validiert Build-Szenarien & CLI-Pfade    |
-| `install-only.yml`        | Demo-Workflow für Trainingsumgebungen    |
+| [`validate-extensions.yml`](./.github/workflows/validate-extensions.yml) | Prüft das Update-Skript im GitHub Runner |
+| [`build-extensions.yml`](./.github/workflows/build-extensions.yml)      | Validiert Build-Szenarien & CLI-Pfade    |
+| [`install-only.yml`](./.github/workflows/install-only.yml)              | Demo-Workflow für Trainingsumgebungen    |
 
 ---
 
 ## 📜 Lizenz
 
-Dieses Projekt steht unter der [MIT-Lizenz](LICENSE.md). Frei verwendbar – auch für eigene Projekte & Schulungsunterlagen.
+Dieses Projekt steht unter der [MIT-Lizenz](./LICENSE.md). Frei verwendbar – auch für eigene Projekte & Schulungsunterlagen.
 
 ---
 
 ## 🧾 Changelog
 
-Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
+Alle Änderungen werden im [CHANGELOG.md](./CHANGELOG.md) dokumentiert.
 
 ---
 
@@ -158,7 +198,6 @@ Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
 Du hast Fragen, Feedback, Ideen oder möchtest dich austauschen?  
 Nutze den [Discussions-Bereich](https://github.com/AndreHohenstein/vscode-extension-updater/discussions) und werde Teil der Community!
-
 
 Für Fragen, Verbesserungsvorschläge oder Rückmeldungen:
 

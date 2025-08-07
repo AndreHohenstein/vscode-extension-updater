@@ -6,6 +6,33 @@ Dieses Dokument listet alle wichtigen Änderungen an diesem Projekt chronologisc
 
 ## [Unreleased]
 
+---
+
+## [1.0.1] – 2025-08-09
+### ✨ Erweiterungen & Verbesserungen
+
+#### Hinzugefügt
+- ➕ **Neues Skript:** `VSCode-Extension-Manager.ps1`  
+  Interaktives PowerShell-Menü für Demo-/Schulungszwecke (`scripts/VSCode-Extension-Manager.ps1`)
+- 🎬 **Demo:** Neuer Abschnitt in der README inkl. eingebundenem GIF (Ablage: `assets/VSCode-Extension-Manager.gif`)
+- 📝 **Projektstruktur:** In README.md und im Projektstruktur-Block ergänzt
+- 🗂️ **Extensions.txt:** In README.md (Projektstruktur + Beschreibung) nun explizit aufgeführt
+
+#### Geändert
+- 📄 README.md:  
+  - Demo-Abschnitt mit GIF und Menü-Beschreibung ergänzt  
+  - Projektstruktur aktualisiert (Assets-Ordner, neue Skripte, Extensions.txt)  
+  - Badges/Links geprüft und klickbar gemacht  
+  - Kosmetik/Formatierung (z. B. bessere Übersicht bei Extensions und Features)
+- ⚙️ Scripts/Logik:
+  - Hinweis zu unterschiedlichen Logfiles (`install`/`update`) in Doku/Verwendung  
+  - Assets-Ordner für Screenshots und Demo eingeführt
+
+#### Entfernt
+- ❌ Nicht verwendet: "Random Facts" im Menü entfernt (zurück zu schlanker, professioneller Demo)
+
+---
+
 ## [1.0.0] – 2025-08-07
 ### 🎉 Erstveröffentlichung
 
@@ -34,3 +61,5 @@ Dieses Dokument listet alle wichtigen Änderungen an diesem Projekt chronologisc
 - **Install-Extensions.ps1** und **Update-Extensions.ps1**: Logfile-Namen/Pfade vereinheitlicht
   - Install-Extensions.ps1 schreibt jetzt nach `$env:TEMP\vscode-extensions-install.log`
   - Update-Extensions.ps1 schreibt jetzt nach `$env:TEMP\vscode-extensions-update.log`
+
+---
