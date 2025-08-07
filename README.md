@@ -1,5 +1,11 @@
 # 🚀 VSCode Extension Updater
 
+![Build](https://github.com/AndreHohenstein/vscode-extension-updater/actions/workflows/validate-extensions.yml/badge.svg)
+![Release](https://img.shields.io/github/v/release/AndreHohenstein/vscode-extension-updater?label=Release)
+![License](https://img.shields.io/github/license/AndreHohenstein/vscode-extension-updater)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%20Core-5391FE?logo=powershell)
+
 Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual Studio Code-Erweiterungen – inklusive GitHub Actions-Workflows, Logging, Failback-Strategien und Schulungsbeispielen.
 
 ---
