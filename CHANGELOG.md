@@ -1,41 +1,23 @@
-# 📝 Changelog
+# 📜 Changelog – VSCode Extension Updater
 
-Alle Änderungen an diesem Projekt werden hier dokumentiert.
-
----
-
-## \[Unreleased]
-
-* Noch keine neuen Änderungen dokumentiert.
+Dieses Dokument listet alle wichtigen Änderungen an diesem Projekt chronologisch auf.
 
 ---
 
-## \[2025-08-06]
+## [1.0.0] – 2025-08-07
+### 🎉 Erstveröffentlichung
 
-### Added
-
-* Failback-Strategie in Workflows: prüft User-Installation → System-Installation → installiert bei Bedarf via Winget.
-* Hinweisblock in README ergänzt (Letzte Änderungen + Verweis auf Changelog).
-
-### Changed
-
-* Chocolatey vollständig entfernt – Workflows setzen jetzt auf vorhandene lokale Installation (User oder System).
-* README aktualisiert, neue Struktur und Dokumentation der Failback-Strategie.
-
----
-
-## \[2025-08-05]
-
-### Added
-
-* Logging in PowerShell-Skripte integriert (CMTrace-kompatibel).
-* `install-only.yml` Workflow hinzugefügt (für Schulungszwecke / Demos).
-
----
-
-## \[2025-08-04]
-
-### Initial
-
-* Projekt gestartet mit `Install-Extensions.ps1` und `Update-Extensions.ps1`.
-* Erste README.md und LICENSE.md erstellt.
+- Projektstruktur definiert mit `scripts` und `.github/workflows`
+- Zwei PowerShell-Skripte:
+  - `Install-Extensions.ps1`
+  - `Update-Extensions.ps1`
+- Unterstützung für:
+  - Logging (CMTrace-kompatibel)
+  - Emoji-Ausgabe für Statusanzeige
+  - Failback-Strategie bei VSCode-CLI-Erkennung (User > System > Winget)
+- GitHub Action Workflows:
+  - `validate-extensions.yml`
+  - `build-extensions.yml`
+  - `install-only.yml`
+- README mit vollständiger Doku
+- Lizenz (MIT) eingebunden
