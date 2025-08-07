@@ -1,6 +1,6 @@
 ﻿param(
     [string]$ExtensionsFile = (Join-Path $PSScriptRoot "extensions.txt"),
-    [string]$LogFile = "$env:TEMP\VscodeExtensionsUpdater.log"
+    [string]$LogFile = "$env:TEMP\vscode-extensions-install.log"
 )
 
 function Write-Log {
