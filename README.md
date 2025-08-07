@@ -12,17 +12,17 @@ Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual
 
 ## 📝 Inhaltsverzeichnis
 
-* [🚀 Projektüberblick](#-projektüberblick)
-* [📸 Screenshots](#-screenshots)
-* [⚙️ Installation](#️-installation)
-* [🚀 Verwendung](#-verwendung)
-* [✨ Features & Highlights](#-features--highlights)
-* [🧰 Voraussetzungen](#-voraussetzungen)
-* [📁 Projektstruktur](#-projektstruktur)
-* [🔄 GitHub Workflows](#-github-workflows)
-* [📜 Lizenz](#-lizenz)
-* [🧾 Changelog](#-changelog)
-* [💬 Feedback & Support](#-feedback--support)
+- [🚀 Projektüberblick](#-projektüberblick)
+- [📸 Screenshots](#-screenshots)
+- [⚙️ Installation](#️-installation)
+- [🚀 Verwendung](#-verwendung)
+- [✨ Features & Highlights](#-features--highlights)
+- [🧰 Voraussetzungen](#-voraussetzungen)
+- [📁 Projektstruktur](#-projektstruktur)
+- [🔄 GitHub Workflows](#-github-workflows)
+- [📜 Lizenz](#-lizenz)
+- [🧾 Changelog](#-changelog)
+- [💬 Feedback & Support](#-feedback--support)
 
 ---
 
@@ -30,8 +30,8 @@ Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual
 
 Dieses Projekt bietet zwei PowerShell-Skripte zur Verwaltung von VS Code Extensions:
 
-* `Install-Extensions.ps1` – für die initiale Installation definierter Erweiterungen
-* `Update-Extensions.ps1` – für die automatische Update-Prüfung & Installation
+- `Install-Extensions.ps1` – für die initiale Installation definierter Erweiterungen
+- `Update-Extensions.ps1` – für die automatische Update-Prüfung & Installation
 
 Die GitHub Workflows ermöglichen es zusätzlich, diese Logik im CI/CD-Kontext auszuführen – z. B. für Schulungen, Demos, automatisierte Tests oder Entwicklungsszenarien.
 
@@ -39,7 +39,15 @@ Die GitHub Workflows ermöglichen es zusätzlich, diese Logik im CI/CD-Kontext a
 
 ## 📸 Screenshots
 
-> *(Optionaler Bereich – hier kannst du künftig Beispielausgaben einfügen)*
+### 1. GitHub Actions Workflow (Validierung & Test)
+
+![GitHub Actions Workflow](./assets/GitHubActions.png)
+
+---
+
+### 2. PowerShell-Terminal: Update-Extensions.ps1
+
+![Update Extensions PowerShell](./assets/Update-Extensions.png)
 
 ---
 
@@ -63,10 +71,10 @@ cd vscode-extension-updater/scripts
 
 ```powershell
 # Extensions installieren (z. B. nach Clean-Setup oder auf Testsystem)
-./Install-Extensions.ps1 -LogPath "$env:TEMP\vscode-extensions-install.log"
+./Install-Extensions.ps1 -LogPath "$env:TEMP\\vscode-extensions-install.log"
 
 # Extensions aktualisieren
-./Update-Extensions.ps1 -LogPath "$env:TEMP\vscode-extensions-update.log"
+./Update-Extensions.ps1 -LogPath "$env:TEMP\\vscode-extensions-update.log"
 ```
 
 ---
@@ -86,13 +94,13 @@ cd vscode-extension-updater/scripts
 
 ## 🧰 Voraussetzungen
 
-* Windows 10/11 mit PowerShell 5.1 oder höher
-* Visual Studio Code lokal installiert (User- oder System-Installer)
-* Git (für Repository-Zugriff)
+- Windows 10/11 mit PowerShell 5.1 oder höher
+- Visual Studio Code lokal installiert (User- oder System-Installer)
+- Git (für Repository-Zugriff)
 
 Optional:
 
-* Winget (für Failback-Funktion, falls VS Code nicht vorhanden ist)
+- Winget (für Failback-Funktion, falls VS Code nicht vorhanden ist)
 
 ---
 
@@ -107,6 +115,10 @@ Optional:
  ├── 🧪 install-only.yml
  ├── ⚙️ build-extensions.yml
  └── ✅ validate-extensions.yml
+
+📁 assets
+ ├── GitHubActions.png
+ └── Update-Extensions.png
 
 📜 README.md
 📜 LICENSE.md
@@ -143,8 +155,8 @@ Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
 Für Fragen, Verbesserungsvorschläge oder Rückmeldungen:
 
-📧 E-Mail: [a.hohenstein@outlook.com](mailto:a.hohenstein@outlook.com)
-📢 GitHub Issues: [Projekt-Issuebereich öffnen](https://github.com/AndreHohenstein/vscode-extension-updater/issues)
+📧 E-Mail: a.hohenstein@outlook.com  
+📢 GitHub Issues: [Projekt-Issuebereich öffnen](https://github.com/AndreHohenstein/vscode-extension-updater/issues)  
 👨‍🏫 Einsatz für Schulungen & Community willkommen!
 
 ---

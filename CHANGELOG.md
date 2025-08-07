@@ -3,6 +3,17 @@
 Dieses Dokument listet alle wichtigen Änderungen an diesem Projekt chronologisch auf.
 
 ---
+## [Unreleased]
+
+### Hinzugefügt
+- 📸 Neue Screenshots („GitHub Actions Workflow“, „Update-Extensions.ps1“) im Abschnitt *Screenshots* der README.md hinzugefügt
+- 🏷️ Badges für Build, Release, License, Platform und PowerShell-Version am Anfang der README.md ergänzt
+
+### Geändert
+- 📄 README.md strukturell und optisch überarbeitet (bessere Lesbarkeit, aktualisiertes Inhaltsverzeichnis)
+
+
+
 
 ## [1.0.0] – 2025-08-07
 ### 🎉 Erstveröffentlichung
