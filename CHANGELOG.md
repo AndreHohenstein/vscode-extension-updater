@@ -11,7 +11,7 @@ Dieses Dokument listet alle wichtigen Änderungen an diesem Projekt chronologisc
 
 ### Geändert
 - 📄 README.md strukturell und optisch überarbeitet (bessere Lesbarkeit, aktualisiertes Inhaltsverzeichnis)
-
+- ⚙️ Repository-Regeln, Workflows oder Policies wurden aktualisiert/an neue Projektanforderungen angepasst
 
 
 

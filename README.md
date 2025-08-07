@@ -5,6 +5,7 @@
 ![License](https://img.shields.io/github/license/AndreHohenstein/vscode-extension-updater)
 ![Platform](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%20Core-5391FE?logo=powershell)
+[![Discuss on GitHub](https://img.shields.io/badge/Discuss-GitHub%20Discussions-blue?logo=github)](https://github.com/AndreHohenstein/vscode-extension-updater/discussions)
 
 Ein automatisiertes PowerShell-Tool zur Verwaltung und Aktualisierung von Visual Studio Code-Erweiterungen – inklusive GitHub Actions-Workflows, Logging, Failback-Strategien und Schulungsbeispielen.
 
@@ -152,6 +153,12 @@ Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 ---
 
 ## 💬 Feedback & Support
+
+💬 **Mitdiskutieren erwünscht!**
+
+Du hast Fragen, Feedback, Ideen oder möchtest dich austauschen?  
+Nutze den [Discussions-Bereich](https://github.com/AndreHohenstein/vscode-extension-updater/discussions) und werde Teil der Community!
+
 
 Für Fragen, Verbesserungsvorschläge oder Rückmeldungen:
 
